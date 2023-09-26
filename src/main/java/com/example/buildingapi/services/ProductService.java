@@ -12,7 +12,7 @@ public interface ProductService {
 
     Product getSingleProduct(Long productId);
 
-    String addNewProduct(ProductDTO productDto);
+    Product addNewProduct(ProductDTO productDto);
 
     String updateProduct(Long productId, ProductDTO productDto);
 
