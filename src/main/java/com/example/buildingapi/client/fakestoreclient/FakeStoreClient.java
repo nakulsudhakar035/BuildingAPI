@@ -96,4 +96,24 @@ public class FakeStoreClient {
         }
         return Optional.of(fakeStoreProductDto);
     }
+
+    public Optional<List<FakeStoreCategoryDto>> getAllCategories() throws NotFoundException {
+        ResponseEntity<FakeStoreCategoryDto[]> responseEntity = requestForEntity(HttpMethod.GET,"https://fakestoreapi.com/products/categories",
+                null, FakeStoreCategoryDto[].class);
+        List<FakeStoreCategoryDto> fakeStorecategoryDtos = Arrays.asList(responseEntity.getBody());
+        if(fakeStorecategoryDtos.isEmpty()){
+            throw new NotFoundException("No categories found");
+        }
+        return Optional.of(fakeStorecategoryDtos);
+    }
+
+    public Optional<List<FakeStoreProductDto>> getProductsInCategory(String category) throws NotFoundException {
+        ResponseEntity<FakeStoreProductDto[]> responseEntity = requestForEntity(HttpMethod.GET,"https://fakestoreapi.com/products/category/{$category}",
+                null, FakeStoreProductDto[].class, category);
+        List<FakeStoreProductDto> fakeStorecategoryDtos = Arrays.asList(responseEntity.getBody());
+        if(fakeStorecategoryDtos.isEmpty()){
+            throw new NotFoundException("No products found in caegory " + category);
+        }
+        return Optional.of(fakeStorecategoryDtos);
+    }
 }
