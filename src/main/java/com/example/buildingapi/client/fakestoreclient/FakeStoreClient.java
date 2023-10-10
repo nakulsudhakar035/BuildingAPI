@@ -22,6 +22,8 @@ import java.util.Optional;
 public class FakeStoreClient {
     private RestTemplateBuilder restTemplateBuilder;
 
+    private final String url = "https://fakestoreapi.com/products";
+
     public FakeStoreClient(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplateBuilder = restTemplateBuilder;
     }
@@ -37,7 +39,7 @@ public class FakeStoreClient {
     }
 
     public Optional<List<FakeStoreProductDto>> getAllProducts() throws NotFoundException {
-        ResponseEntity<FakeStoreProductDto[]> responseEntity = requestForEntity(HttpMethod.GET,"https://fakestoreapi.com/products",
+        ResponseEntity<FakeStoreProductDto[]> responseEntity = requestForEntity(HttpMethod.GET,url,
                 null, FakeStoreProductDto[].class);
         List<FakeStoreProductDto> fakeStoreProductDtos = Arrays.asList(responseEntity.getBody());
         if(fakeStoreProductDtos.isEmpty()){
@@ -47,7 +49,7 @@ public class FakeStoreClient {
     }
 
     Optional<FakeStoreProductDto> getSingleProduct(Long productId) throws NotFoundException {
-        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.GET,"https://fakestoreapi.com/products/{id}",
+        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.GET,url+"/{id}",
                 null, FakeStoreProductDto.class, productId);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         if(fakeStoreProductDto == null){
@@ -57,7 +59,7 @@ public class FakeStoreClient {
     }
 
     Optional<FakeStoreProductDto> addNewProduct(Product product) {
-        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.POST,"https://fakestoreapi.com/products",
+        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.POST,url,
                 product, FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         return Optional.of(fakeStoreProductDto);
@@ -68,7 +70,7 @@ public class FakeStoreClient {
     Everything else is null
      */
     Optional<FakeStoreProductDto> updateProduct(Long productId, Product product) throws NotFoundException {
-        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.PATCH,"https://fakestoreapi.com/products/{id}",
+        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.PATCH,url+"/{id}",
                 product, FakeStoreProductDto.class, productId);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         if(fakeStoreProductDto == null){
@@ -78,7 +80,7 @@ public class FakeStoreClient {
     }
 
     Optional<FakeStoreProductDto> replaceProduct(Long productId, Product product) throws NotFoundException {
-        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.PUT,"https://fakestoreapi.com/products/{id}",
+        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.PUT,url+"/{id}",
                 product, FakeStoreProductDto.class, productId);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         if(fakeStoreProductDto == null){
@@ -88,7 +90,7 @@ public class FakeStoreClient {
     }
 
     Optional<FakeStoreProductDto> deleteProduct(Long productId) throws NotFoundException {
-        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.DELETE,"https://fakestoreapi.com/products/{id}",
+        ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.DELETE,url+"/{id}",
                 null, FakeStoreProductDto.class, productId);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         if(fakeStoreProductDto == null){
@@ -98,7 +100,7 @@ public class FakeStoreClient {
     }
 
     public Optional<List<FakeStoreCategoryDto>> getAllCategories() throws NotFoundException {
-        ResponseEntity<FakeStoreCategoryDto[]> responseEntity = requestForEntity(HttpMethod.GET,"https://fakestoreapi.com/products/categories",
+        ResponseEntity<FakeStoreCategoryDto[]> responseEntity = requestForEntity(HttpMethod.GET,url+"/categories",
                 null, FakeStoreCategoryDto[].class);
         List<FakeStoreCategoryDto> fakeStorecategoryDtos = Arrays.asList(responseEntity.getBody());
         if(fakeStorecategoryDtos.isEmpty()){
@@ -108,7 +110,7 @@ public class FakeStoreClient {
     }
 
     public Optional<List<FakeStoreProductDto>> getProductsInCategory(String category) throws NotFoundException {
-        ResponseEntity<FakeStoreProductDto[]> responseEntity = requestForEntity(HttpMethod.GET,"https://fakestoreapi.com/products/category/{$category}",
+        ResponseEntity<FakeStoreProductDto[]> responseEntity = requestForEntity(HttpMethod.GET,url+"/category/{$category}",
                 null, FakeStoreProductDto[].class, category);
         List<FakeStoreProductDto> fakeStorecategoryDtos = Arrays.asList(responseEntity.getBody());
         if(fakeStorecategoryDtos.isEmpty()){
