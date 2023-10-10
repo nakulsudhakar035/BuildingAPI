@@ -1,21 +1,25 @@
 package com.example.buildingapi.services;
 
+import com.example.buildingapi.client.fakestoreclient.FakeStoreProductDto;
 import com.example.buildingapi.dtos.ProductDTO;
+import com.example.buildingapi.exceptions.NotFoundException;
 import com.example.buildingapi.models.Product;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
-    List<Product> getAllProducts();
+    Optional<List<Product>> getAllProducts() throws NotFoundException;
 
-    Product getSingleProduct(Long productId);
+    Optional<Product> getSingleProduct(Long productId) throws NotFoundException;
 
-    Product addNewProduct(ProductDTO productDto);
+    Optional<Product> addNewProduct(Product product);
 
-    String updateProduct(Long productId, ProductDTO productDto);
+    Optional<Product> updateProduct(Long productId, Product product) throws NotFoundException;
 
-    String deleteProduct(Long productId);
+    Optional<Product> deleteProduct(Long productId) throws NotFoundException;
 
 }
