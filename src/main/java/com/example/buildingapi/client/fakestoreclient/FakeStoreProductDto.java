@@ -1,13 +1,11 @@
 package com.example.buildingapi.client.fakestoreclient;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 public class FakeStoreProductDto {
     private Long id;

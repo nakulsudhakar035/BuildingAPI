@@ -59,8 +59,13 @@ public class FakeStoreClient {
     }
 
     Optional<FakeStoreProductDto> addNewProduct(Product product) {
+        FakeStoreProductDto productDto = new FakeStoreProductDto();
+        productDto.setTitle(product.getTitle());
+        productDto.setCategory(product.getCategory().getName());
+        productDto.setPrice(product.getPrice());
+        productDto.setImage(product.getImageUrl());
         ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.POST,url,
-                product, FakeStoreProductDto.class);
+                productDto, FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         return Optional.of(fakeStoreProductDto);
     }
@@ -70,8 +75,13 @@ public class FakeStoreClient {
     Everything else is null
      */
     Optional<FakeStoreProductDto> updateProduct(Long productId, Product product) throws NotFoundException {
+        FakeStoreProductDto productDto = new FakeStoreProductDto();
+        productDto.setTitle(product.getTitle());
+        productDto.setCategory(product.getCategory().getName());
+        productDto.setPrice(product.getPrice());
+        productDto.setImage(product.getImageUrl());
         ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.PATCH,url+"/{id}",
-                product, FakeStoreProductDto.class, productId);
+                productDto, FakeStoreProductDto.class, productId);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         if(fakeStoreProductDto == null){
             throw new NotFoundException("No product with id " + productId);
@@ -80,8 +90,13 @@ public class FakeStoreClient {
     }
 
     Optional<FakeStoreProductDto> replaceProduct(Long productId, Product product) throws NotFoundException {
+        FakeStoreProductDto productDto = new FakeStoreProductDto();
+        productDto.setTitle(product.getTitle());
+        productDto.setCategory(product.getCategory().getName());
+        productDto.setPrice(product.getPrice());
+        productDto.setImage(product.getImageUrl());
         ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.PUT,url+"/{id}",
-                product, FakeStoreProductDto.class, productId);
+                productDto, FakeStoreProductDto.class, productId);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
         if(fakeStoreProductDto == null){
             throw new NotFoundException("No product with id " + productId);
