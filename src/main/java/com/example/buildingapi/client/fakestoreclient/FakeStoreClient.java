@@ -3,7 +3,9 @@ package com.example.buildingapi.client.fakestoreclient;
 import com.example.buildingapi.exceptions.NotFoundException;
 import com.example.buildingapi.models.Category;
 import com.example.buildingapi.models.Product;
+import com.example.buildingapi.repositories.ProductRepository;
 import jakarta.annotation.Nullable;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +23,13 @@ import java.util.Optional;
 @Component
 public class FakeStoreClient {
     private RestTemplateBuilder restTemplateBuilder;
+    private ProductRepository productRepository;
 
     private final String url = "https://fakestoreapi.com/products";
 
-    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder) {
+    public FakeStoreClient(RestTemplateBuilder restTemplateBuilder, ProductRepository productRepository) {
         this.restTemplateBuilder = restTemplateBuilder;
+        this.productRepository = productRepository;
     }
     private <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod, String url, @Nullable Object request,
                                                    Class<T> responseType, Object... uriVariables) throws RestClientException {
@@ -67,6 +71,9 @@ public class FakeStoreClient {
         ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.POST,url,
                 productDto, FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+        //if(fakeStoreProductDto!=null){
+            productRepository.save(product);
+        //}
         return Optional.of(fakeStoreProductDto);
     }
 
