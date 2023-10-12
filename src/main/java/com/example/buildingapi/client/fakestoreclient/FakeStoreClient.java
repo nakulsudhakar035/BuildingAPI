@@ -71,9 +71,9 @@ public class FakeStoreClient {
         ResponseEntity<FakeStoreProductDto> responseEntity = requestForEntity(HttpMethod.POST,url,
                 productDto, FakeStoreProductDto.class);
         FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
-        //if(fakeStoreProductDto!=null){
+        if(fakeStoreProductDto!=null){
             productRepository.save(product);
-        //}
+        }
         return Optional.of(fakeStoreProductDto);
     }
 
