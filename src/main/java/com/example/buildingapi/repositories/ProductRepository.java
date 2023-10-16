@@ -13,4 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAll();
     @Override
     Optional<Product> findById(Long aLong);
+
+    List<Product> findByImageUrlIsNullOrderByIdDesc();
 }

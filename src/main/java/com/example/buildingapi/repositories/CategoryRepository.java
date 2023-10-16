@@ -1,6 +1,7 @@
 package com.example.buildingapi.repositories;
 
 import com.example.buildingapi.models.Category;
+import com.example.buildingapi.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Override
     List<Category> findAll();
+
+    Category findCategoryByName(String name);
+
+    List<Product> findProductsByCategoryId(Long id);
 }
